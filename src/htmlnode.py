@@ -51,8 +51,12 @@ class LeafNode(HTMLNode):
             string = f'<b>{self.value}</b>'
         elif self.tag == "i":
             string = f'<i>{self.value}</i>'
+        elif self.tag == "code":
+            string = f'<code>{self.value}</code>'
+        elif self.tag == "img":
+            string = f'<img {self.props_to_html()} >'
         elif self.tag == "a":
-            string = f'<a {self.props_to_html}>{self.value}</a>'
+            string = f'<a {self.props_to_html()}>{self.value}</a>'
         else:
             raise NotImplementedError
         return string
@@ -66,7 +70,7 @@ class ParentNode(HTMLNode):
         if not self.tag:
             raise ValueError("object must have a tag")
         for child in self.children:
-            if not child.value:
+            if isinstance(child, LeafNode) and not child.value:
                 raise ValueError("Children must have value")
             else:
                 child_strings = f"{child_strings}{child.to_html()}"
