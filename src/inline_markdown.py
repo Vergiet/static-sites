@@ -37,6 +37,12 @@ def split_nodes_link(old_nodes):
             continue
         split_nodes = []
         match_list = re.findall(LINK_REGEX_FULL, old_node.text)
+
+        if len(match_list) == 0:
+            split_nodes.append(old_node)
+            new_nodes.extend(split_nodes)
+            continue
+
         for sections in match_list:
             if not sections[1][0] == '[' or not sections[1][-1] == ')':
                 raise ValueError("invalid markdown, incorrect link syntax")
@@ -62,6 +68,12 @@ def split_nodes_image(old_nodes):
             continue
         split_nodes = []
         match_list = re.findall(IMG_REGEX_FULL, old_node.text)
+
+        if len(match_list) == 0:
+            split_nodes.append(old_node)
+            new_nodes.extend(split_nodes)
+            continue
+
         for sections in match_list:
             if not sections[1][0] == '!' or not sections[1][-1] == ')':
                 raise ValueError("invalid markdown, incorrect image syntax")
