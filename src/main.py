@@ -2,25 +2,27 @@
 from textnode import TextNode, TextType
 from htmlnode import LeafNode
 
+from constants import *
+
 
 
 def text_node_to_html_node(text_node):
     props = None
     tag = None
     match text_node.text_type:
-        case TextType.Bold:
+        case TextType.BOLD:
             tag = "b"
-        case TextType.Italic:
+        case TextType.ITALIC:
             tag = "i"
-        case TextType.Code:
+        case TextType.CODE:
             tag = "code"
-        case TextType.Link:
+        case TextType.LINK:
             tag = "a"
             props = {
                 "href": text_node.url,
                 "alt": text_node.text
             }
-        case TextType.Image:
+        case TextType.IMAGE:
             tag = "img"
             props = {
                 "src": text_node.url,
@@ -29,9 +31,10 @@ def text_node_to_html_node(text_node):
 
     return LeafNode(tag, text_node.text, props)
 
+print('\n')
 
 def main():
-    print(TextNode('This is some anchor text', (TextType.Link), 'https://www.boot.dev'))
+    print(TextNode('This is some anchor text', (TextType.LINK), 'https://www.boot.dev'))
 
 
 
