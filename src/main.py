@@ -7,7 +7,7 @@ from generate_page import generate_page, generate_files_recusive
 
 
 dir_path_static = "./static"
-dir_path_public = "./public"
+dir_path_public = "./docs"
 index_path = "./content"
 template_path = "./template.html"
 dst_index_file = "index.html"
