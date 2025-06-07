@@ -4,8 +4,6 @@ from htmlnode import LeafNode
 
 from constants import *
 
-
-
 def text_node_to_html_node(text_node):
     props = None
     tag = None
@@ -16,6 +14,8 @@ def text_node_to_html_node(text_node):
             tag = "i"
         case TextType.CODE:
             tag = "code"
+        case TextType.LIST:
+            tag = "list"
         case TextType.LINK:
             tag = "a"
             props = {

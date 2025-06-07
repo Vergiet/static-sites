@@ -50,6 +50,13 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.value, "This is a code block")
         self.assertEqual(html_node.to_html(), "<code>This is a code block</code>")
 
+    def test_list(self):
+        node = TextNode("This is a list item", TextType.LIST)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, "list")
+        self.assertEqual(html_node.value, "This is a list item")
+        self.assertEqual(html_node.to_html(), "<li>This is a list item</li>")
+
     def test_link(self):
         node = TextNode("This is a link node", TextType.LINK, "boot.dev")
         html_node = text_node_to_html_node(node)

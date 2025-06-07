@@ -53,6 +53,8 @@ class LeafNode(HTMLNode):
             string = f'<i>{self.value}</i>'
         elif self.tag == "code":
             string = f'<code>{self.value}</code>'
+        elif self.tag == "list":
+            string = f'<li>{self.value}</li>'
         elif self.tag == "img":
             string = f'<img {self.props_to_html()} >'
         elif self.tag == "a":
@@ -75,7 +77,10 @@ class ParentNode(HTMLNode):
             else:
                 child_strings = f"{child_strings}{child.to_html()}"
 
-        return f"<{self.tag}>{child_strings}</{self.tag}>"
+        add_newline=""
+        if child_strings.endswith("\n"):
+            add_newline="\n"
+        return f"<{self.tag}>{child_strings.strip()}{add_newline}</{self.tag}>"
 
     def __repr__(self):
         return f"ParentNode({self.tag}, {self.children}, {self.props})"
