@@ -1,43 +1,29 @@
-﻿#!/usr/bin/env python
-from textnode import TextNode, TextType
-from htmlnode import LeafNode
+﻿import os
+import shutil
 
-from constants import *
+from copystatic import copy_files_recursive
+from generate_page import generate_page, generate_files_recusive
 
-def text_node_to_html_node(text_node):
-    props = None
-    tag = None
-    match text_node.text_type:
-        case TextType.BOLD:
-            tag = "b"
-        case TextType.ITALIC:
-            tag = "i"
-        case TextType.CODE:
-            tag = "code"
-        case TextType.LIST:
-            tag = "list"
-        case TextType.LINK:
-            tag = "a"
-            props = {
-                "href": text_node.url,
-                "alt": text_node.text
-            }
-        case TextType.IMAGE:
-            tag = "img"
-            props = {
-                "src": text_node.url,
-                "alt": text_node.text
-            }
 
-    return LeafNode(tag, text_node.text, props)
+dir_path_static = "./static"
+dir_path_public = "./public"
+index_path = "./content"
+template_path = "./template.html"
+dst_index_file = "index.html"
+dst_index_path = os.path.join(dir_path_public,dst_index_file)
 
-print('\n')
 
 def main():
-    print(TextNode('This is some anchor text', (TextType.LINK), 'https://www.boot.dev'))
+    print("Deleting public directory...")
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
+
+    print("Copying static files to public directory...")
+    copy_files_recursive(dir_path_static, dir_path_public)
+
+    print("Generating files to public directory...")
+    generate_files_recusive(index_path, template_path, dir_path_public)
 
 
 
-
-if __name__=="__main__":
-    main()
+main()
